@@ -7,8 +7,9 @@
 <style>
   :root {
     --purple: #8b5cf6;
-    --purple-light: #ede9fe;
     --purple-dark: #7c3aed;
+    --purple-deep: #5b21b6;
+    --purple-light: #ede9fe;
     --bg: #ffffff;
     --fg: #1f2328;
     --muted: #6b7280;
@@ -16,190 +17,160 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     background: var(--bg);
     color: var(--fg);
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
-  /* ===== 头部（主题皮肤） ===== */
+  /* ===== 头部 ===== */
   .hero {
-    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 45%, #a78bfa 100%);
-    color: #fff;
-    padding: 28px 20px 48px;
+    background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 45%, #8b5cf6 100%);
+    padding: 22px 20px 44px;
     position: relative;
     overflow: hidden;
   }
+  .hero::before, .hero::after {
+    content: ""; position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,.07);
+  }
+  .hero::before { width: 200px; height: 200px; top: -80px; right: -40px; }
+  .hero::after { width: 130px; height: 130px; bottom: -60px; left: 32%; }
   .hero-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .hero-text h1 {
-    font-size: 1.9rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(0,0,0,.15);
-  }
-  .hero-text .meta {
-    font-size: .9rem;
-    opacity: .92;
-    margin-top: 6px;
+    max-width: 1080px; margin: 0 auto;
+    position: relative; z-index: 2;
+    display: flex; align-items: center; gap: 16px;
   }
   .hero-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 56px; height: 56px; border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(255,255,255,.85);
-    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    border: 2.5px solid rgba(255,255,255,.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,.25);
     flex-shrink: 0;
   }
-  .hero::before, .hero::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255,255,255,.08);
+  .hero-text h1 {
+    font-size: 1.55rem; font-weight: 800;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fff 0%, #f5f3ff 50%, #ddd6fe 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 24px rgba(255,255,255,.15);
   }
-  .hero::before { width: 220px; height: 220px; top: -70px; right: -50px; }
-  .hero::after { width: 140px; height: 140px; bottom: -60px; left: 30%; }
+  .hero-text .meta {
+    font-size: .82rem; color: #e9d5ff;
+    margin-top: 4px; letter-spacing: .5px;
+  }
 
-  /* ===== 表情墙（主题皮肤装饰） ===== */
+  /* ===== 表情皮肤墙（紧凑横条） ===== */
   .skin-wall {
-    max-width: 900px;
-    margin: -24px auto 0;
-    padding: 0 20px;
-    position: relative;
-    z-index: 3;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    max-width: 1080px; margin: -26px auto 0;
+    padding: 0 20px; position: relative; z-index: 3;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
   }
   .skin-wall img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 14px;
-    border: 3px solid #fff;
-    box-shadow: 0 6px 18px rgba(139,92,246,.25);
-    transition: transform .25s ease, box-shadow .25s ease;
+    width: 100%; aspect-ratio: 16/7;
+    object-fit: cover; border-radius: 12px;
+    border: 2.5px solid #fff;
+    box-shadow: 0 4px 14px rgba(91,33,182,.2);
+    transition: transform .2s ease;
     cursor: pointer;
   }
-  .skin-wall img:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 12px 28px rgba(139,92,246,.4);
-  }
+  .skin-wall img:hover { transform: translateY(-3px); }
 
-  /* ===== 正文 ===== */
-  main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px 20px 60px;
+  /* ===== 方块网格（B站风格） ===== */
+  main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 50px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
-  .topic-card {
+  .card {
     background: #fff;
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    transition: box-shadow .2s ease;
-  }
-  .topic-card:hover { box-shadow: 0 6px 20px rgba(139,92,246,.15); }
-  .topic-head {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-  .topic-title {
-    font-size: 1.12rem;
-    font-weight: 700;
-    color: var(--fg);
-    text-decoration: none;
-    flex: 1;
-    line-height: 1.5;
-  }
-  .topic-title:hover { color: var(--purple); }
-  .topic-badge {
-    flex-shrink: 0;
-    background: var(--purple-light);
-    color: var(--purple-dark);
-    font-size: .72rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
-    white-space: nowrap;
-  }
-  .source-tags { margin: 4px 0 8px; }
-  .source-tag {
-    display: inline-block;
-    background: var(--purple);
-    color: #fff;
-    font-size: .72rem;
-    border-radius: 10px;
-    padding: 2px 9px;
-    margin-right: 6px;
-    font-weight: 500;
-  }
-
-  /* ===== 摘要（展开/收缩） ===== */
-  .summary-box {
-    color: var(--fg);
-    font-size: .92rem;
-    line-height: 1.75;
-    background: #faf9ff;
-    border-left: 3px solid var(--purple);
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 10px;
-  }
-  .summary-text { word-break: break-word; }
-  .summary-toggle {
-    color: var(--purple);
-    font-size: .82rem;
-    font-weight: 600;
-    background: none;
-    border: none;
+    border-radius: 14px;
+    overflow: hidden;
     cursor: pointer;
-    padding: 4px 0 0;
-    margin-top: 4px;
+    transition: transform .18s ease, box-shadow .18s ease;
+    display: flex; flex-direction: column;
   }
-  .summary-toggle:hover { text-decoration: underline; }
-  .summary-full { display: none; }
-
-  /* ===== 相关新闻列表 ===== */
-  .topic-links { margin-top: 6px; }
-  .topic-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 0;
-    border-top: 1px dashed var(--border);
-    font-size: .88rem;
-    color: var(--fg);
-    text-decoration: none;
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(139,92,246,.18);
+    border-color: #ddd6fe;
   }
-  .topic-link:first-child { border-top: none; }
-  .topic-link:hover { color: var(--purple); }
-  .topic-link .src { color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+  /* 缩略图 */
+  .thumb {
+    position: relative;
+    aspect-ratio: 16/10;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .thumb .thumb-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    opacity: .92;
+  }
+  .thumb .thumb-char {
+    position: relative;
+    font-size: 2.2rem; font-weight: 800; color: rgba(255,255,255,.92);
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,0,0,.2);
+  }
+  .thumb .thumb-count {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(255,255,255,.92); color: var(--purple-deep);
+    font-size: .68rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .thumb .thumb-srcs {
+    position: absolute; bottom: 8px; left: 8px;
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .thumb .thumb-srcs span {
+    background: rgba(0,0,0,.42); color: #fff;
+    font-size: .64rem; padding: 1px 7px; border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+  /* 卡片体 */
+  .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; flex: 1; }
+  .card-title {
+    font-size: .95rem; font-weight: 700; line-height: 1.45;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.9em;
+  }
+  .card-meta {
+    margin-top: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card-meta .src-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
+  .card-meta .src-name { font-size: .72rem; color: var(--muted); }
+  .card-meta .sep { flex: 1; }
+  .card-meta .toggle-btn {
+    font-size: .72rem; color: var(--purple); font-weight: 600;
+    background: none; border: none; cursor: pointer; padding: 2px 0;
+  }
+  .card-meta .toggle-btn:hover { text-decoration: underline; }
+  /* 摘要（默认收起） */
+  .card-summary {
+    display: none;
+    margin-top: 10px; padding: 9px 11px;
+    background: #faf9ff; border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    font-size: .82rem; color: #374151; line-height: 1.7;
+  }
+  .card.open .card-summary { display: block; }
 
   footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: .8rem;
-    margin-top: 40px;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
+    text-align: center; color: var(--muted); font-size: .78rem;
+    margin-top: 30px; border-top: 1px solid var(--border); padding: 14px 0 20px;
   }
-  @media (max-width: 640px) {
-    .hero-inner { flex-direction: row; }
-    .hero-img { width: 84px; height: 84px; }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .skin-wall { grid-template-columns: repeat(2, 1fr); }
+    .card-title { font-size: .88rem; }
   }
 </style>
 </head>
@@ -207,80 +178,71 @@
 
 <header class="hero">
   <div class="hero-inner">
+    <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="黑塔">
     <div class="hero-text">
       <h1>黑塔新闻站</h1>
       <div class="meta" id="meta"></div>
     </div>
-    <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.png" alt="黑塔" onclick="window.open('images/9E00EF724EC4F35AB0FCB505C26EC23E.png','_blank')">
   </div>
 </header>
 
 <div class="skin-wall">
-  <img src="images/031CD5CAA7B0D9C5FCED78A85DD81613.png" alt="表情1" onclick="window.open(this.src,'_blank')">
-  <img src="images/991D5CF2E798946D51C49B5835E8E393.png" alt="表情2" onclick="window.open(this.src,'_blank')">
-  <img src="images/EFD2AD77BB68E4FDE53F50FE548E8D69.png" alt="表情3" onclick="window.open(this.src,'_blank')">
-  <img src="images/9E00EF724EC4F35AB0FCB505C26EC23E.png" alt="表情4" onclick="window.open(this.src,'_blank')">
+  <img src="images/031CD5CAA7B0D9C5FCED78A85DD81613.webp" alt="表情1" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/991D5CF2E798946D51C49B5835E8E393.webp" alt="表情2" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/EFD2AD77BB68E4FDE53F50FE548E8D69.webp" alt="表情3" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="表情4" loading="lazy" onclick="window.open(this.src,'_blank')">
 </div>
 
-<main id="app"></main>
+<main>
+  <div class="grid" id="app"></div>
+</main>
 
 <footer id="footer"></footer>
 
 <script>
 const DATA = __JSON_DATA__;
 
+const GRADS = [
+  'linear-gradient(135deg,#5b21b6,#8b5cf6)',
+  'linear-gradient(135deg,#7c3aed,#a78bfa)',
+  'linear-gradient(135deg,#6d28d9,#c4b5fd)',
+  'linear-gradient(135deg,#8b5cf6,#ddd6fe)',
+  'linear-gradient(135deg,#4c1d95,#7c3aed)'
+];
+
 function render() {
-  const meta = document.getElementById('meta');
-  meta.textContent = `${DATA.date} · 共 ${DATA.total} 个话题 · 更新于 ${DATA.generated_at}`;
+  document.getElementById('meta').textContent =
+    DATA.date + ' · 跨站要闻 ' + DATA.total + ' 条 · ' + DATA.generated_at.slice(11, 16) + ' 更新';
 
   const app = document.getElementById('app');
   let html = '';
-  for (const tp of DATA.topics) {
-    html += `<article class="topic-card">`;
-    html += `<div class="topic-head">`;
-    html += `<a class="topic-title" href="${tp.items[0].link}" target="_blank" rel="noopener">${esc(tp.title)}</a>`;
-    html += `<span class="topic-badge">${tp.count} 条</span>`;
+  DATA.topics.forEach((tp, i) => {
+    const grad = GRADS[i % GRADS.length];
+    const char = tp.title.trim().charAt(0);
+    const srcs = tp.sources.join(' · ');
+    html += `<article class="card" onclick="toggleCard(this)">`;
+    html += `<div class="thumb"><div class="thumb-bg" style="background:${grad}"></div>`;
+    html += `<span class="thumb-char">${esc(char)}</span>`;
+    html += `<span class="thumb-count">${tp.sources.length} 家报道</span>`;
+    html += `<span class="thumb-srcs">${tp.sources.map(s => `<span>${esc(s)}</span>`).join('')}</span>`;
     html += `</div>`;
-    html += `<div class="source-tags">`;
-    tp.sources.forEach(s => { html += `<span class="source-tag">${esc(s)}</span>`; });
+    html += `<div class="card-body">`;
+    html += `<a class="card-title" href="${tp.items[0].link}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(tp.title)}</a>`;
+    html += `<div class="card-meta">`;
+    html += `<span class="src-dot"></span><span class="src-name">${esc(srcs)}</span>`;
+    html += `<span class="sep"></span><button class="toggle-btn" onclick="event.stopPropagation();toggleCard(this.closest('.card'))">摘要</button>`;
     html += `</div>`;
-
-    // 摘要（展开/收缩）
-    if (tp.summary) {
-      const short = tp.summary.length > 80 ? tp.summary.slice(0, 80) + '…' : tp.summary;
-      html += `<div class="summary-box">`;
-      html += `<div class="summary-text">${esc(short)}</div>`;
-      if (tp.summary.length > 80) {
-        html += `<div class="summary-text summary-full">${esc(tp.summary)}</div>`;
-        html += `<button class="summary-toggle" onclick="toggleSummary(this)">展开全文</button>`;
-      }
-      html += `</div>`;
-    }
-
-    // 相关新闻
-    html += `<div class="topic-links">`;
-    tp.items.forEach(it => {
-      html += `<a class="topic-link" href="${it.link}" target="_blank" rel="noopener">`;
-      html += `<span class="src">${esc(it.source)}</span><span>${esc(it.title)}</span>`;
-      html += `</a>`;
-    });
+    html += `<div class="card-summary">${esc(tp.summary)}</div>`;
     html += `</div></article>`;
-  }
+  });
   app.innerHTML = html;
 
-  document.getElementById('footer').textContent = '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新）';
+  document.getElementById('footer').textContent =
+    '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新，仅保留跨站要闻）';
 }
 
-function toggleSummary(btn) {
-  const box = btn.closest('.summary-box');
-  const short = box.querySelector('.summary-text');
-  const full = box.querySelector('.summary-full');
-  if (full) {
-    const isOpen = full.style.display === 'block';
-    full.style.display = isOpen ? 'none' : 'block';
-    short.style.display = isOpen ? 'block' : 'none';
-    btn.textContent = isOpen ? '展开全文' : '收起';
-  }
+function toggleCard(card) {
+  card.classList.toggle('open');
 }
 
 function esc(s) {

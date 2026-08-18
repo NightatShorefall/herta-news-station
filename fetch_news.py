@@ -230,6 +230,10 @@ def main():
             "items": t_items,
         })
     topics_data.sort(key=lambda t: -t["count"])
+    # 过滤：只保留至少 2 个不同网站报道的话题（单源话题不展示）
+    before = len(topics_data)
+    topics_data = [t for t in topics_data if len(t["sources"]) >= 2]
+    print(f"  过滤单源话题: {before} -> {len(topics_data)}")
 
     output = {
         "date": today,
