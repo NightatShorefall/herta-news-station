@@ -6,12 +6,13 @@
 <title>黑塔新闻站</title>
 <style>
   :root {
+    --purple: #8b5cf6;
+    --purple-light: #ede9fe;
+    --purple-dark: #7c3aed;
     --bg: #ffffff;
     --fg: #1f2328;
     --muted: #6b7280;
     --border: #e5e7eb;
-    --accent: #2563eb;
-    --hover: #f3f4f6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -19,79 +20,207 @@
     background: var(--bg);
     color: var(--fg);
     line-height: 1.6;
-    max-width: 860px;
+  }
+
+  /* ===== 头部（主题皮肤） ===== */
+  .hero {
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 45%, #a78bfa 100%);
+    color: #fff;
+    padding: 28px 20px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .hero-text h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  .hero-text .meta {
+    font-size: .9rem;
+    opacity: .92;
+    margin-top: 6px;
+  }
+  .hero-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,.85);
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    flex-shrink: 0;
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+  }
+  .hero::before { width: 220px; height: 220px; top: -70px; right: -50px; }
+  .hero::after { width: 140px; height: 140px; bottom: -60px; left: 30%; }
+
+  /* ===== 表情墙（主题皮肤装饰） ===== */
+  .skin-wall {
+    max-width: 900px;
+    margin: -24px auto 0;
+    padding: 0 20px;
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .skin-wall img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 18px rgba(139,92,246,.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+  }
+  .skin-wall img:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(139,92,246,.4);
+  }
+
+  /* ===== 正文 ===== */
+  main {
+    max-width: 900px;
     margin: 0 auto;
     padding: 24px 20px 60px;
   }
-  header {
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 16px;
-    margin-bottom: 24px;
+  .topic-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease;
   }
-  h1 { font-size: 1.6rem; font-weight: 700; }
-  .meta {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-top: 6px;
-  }
-  .source-block {
-    margin-bottom: 28px;
-  }
-  .source-head {
+  .topic-card:hover { box-shadow: 0 6px 20px rgba(139,92,246,.15); }
+  .topic-head {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
-    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .topic-title {
+    font-size: 1.12rem;
     font-weight: 700;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4px;
-  }
-  .source-head .count {
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.75rem;
-    border-radius: 10px;
-    padding: 1px 9px;
-    font-weight: 500;
-  }
-  .news-item {
-    padding: 10px 8px;
-    border-bottom: 1px dashed var(--border);
-  }
-  .news-item:last-child { border-bottom: none; }
-  .news-item a {
     color: var(--fg);
     text-decoration: none;
-    font-size: 1rem;
-    display: block;
+    flex: 1;
+    line-height: 1.5;
   }
-  .news-item a:hover { color: var(--accent); }
-  .news-item .time {
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-top: 2px;
+  .topic-title:hover { color: var(--purple); }
+  .topic-badge {
+    flex-shrink: 0;
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
   }
-  .news-item .summary {
-    color: var(--muted);
-    font-size: 0.85rem;
+  .source-tags { margin: 4px 0 8px; }
+  .source-tag {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    font-size: .72rem;
+    border-radius: 10px;
+    padding: 2px 9px;
+    margin-right: 6px;
+    font-weight: 500;
+  }
+
+  /* ===== 摘要（展开/收缩） ===== */
+  .summary-box {
+    color: var(--fg);
+    font-size: .92rem;
+    line-height: 1.75;
+    background: #faf9ff;
+    border-left: 3px solid var(--purple);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+  }
+  .summary-text { word-break: break-word; }
+  .summary-toggle {
+    color: var(--purple);
+    font-size: .82rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0 0;
     margin-top: 4px;
   }
+  .summary-toggle:hover { text-decoration: underline; }
+  .summary-full { display: none; }
+
+  /* ===== 相关新闻列表 ===== */
+  .topic-links { margin-top: 6px; }
+  .topic-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px dashed var(--border);
+    font-size: .88rem;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .topic-link:first-child { border-top: none; }
+  .topic-link:hover { color: var(--purple); }
+  .topic-link .src { color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+
   footer {
     text-align: center;
     color: var(--muted);
-    font-size: 0.8rem;
+    font-size: .8rem;
     margin-top: 40px;
     border-top: 1px solid var(--border);
     padding-top: 16px;
   }
+  @media (max-width: 640px) {
+    .hero-inner { flex-direction: row; }
+    .hero-img { width: 84px; height: 84px; }
+    .skin-wall { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>黑塔新闻站</h1>
-  <div class="meta" id="meta"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>黑塔新闻站</h1>
+      <div class="meta" id="meta"></div>
+    </div>
+    <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.png" alt="黑塔" onclick="window.open('images/9E00EF724EC4F35AB0FCB505C26EC23E.png','_blank')">
+  </div>
 </header>
+
+<div class="skin-wall">
+  <img src="images/031CD5CAA7B0D9C5FCED78A85DD81613.png" alt="表情1" onclick="window.open(this.src,'_blank')">
+  <img src="images/991D5CF2E798946D51C49B5835E8E393.png" alt="表情2" onclick="window.open(this.src,'_blank')">
+  <img src="images/EFD2AD77BB68E4FDE53F50FE548E8D69.png" alt="表情3" onclick="window.open(this.src,'_blank')">
+  <img src="images/9E00EF724EC4F35AB0FCB505C26EC23E.png" alt="表情4" onclick="window.open(this.src,'_blank')">
+</div>
 
 <main id="app"></main>
 
@@ -102,42 +231,59 @@ const DATA = __JSON_DATA__;
 
 function render() {
   const meta = document.getElementById('meta');
-  meta.textContent = `${DATA.date} · 共 ${DATA.total} 条 · 更新于 ${DATA.generated_at}`;
+  meta.textContent = `${DATA.date} · 共 ${DATA.total} 个话题 · 更新于 ${DATA.generated_at}`;
 
   const app = document.getElementById('app');
-  // 按来源分组
-  const groups = {};
-  for (const item of DATA.news) {
-    if (!groups[item.source]) groups[item.source] = [];
-    groups[item.source].push(item);
-  }
-
-  const order = ['新华网', '人民网', '央视网', '中新网'];
-  const sortedSources = Object.keys(groups).sort((a, b) => {
-    return order.indexOf(a) - order.indexOf(b);
-  });
-
   let html = '';
-  for (const src of sortedSources) {
-    const items = groups[src];
-    html += `<section class="source-block">`;
-    html += `<div class="source-head">${src}<span class="count">${items.length}</span></div>`;
-    for (const it of items) {
-      html += `<div class="news-item">`;
-      html += `<a href="${it.link}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>`;
-      if (it.time) html += `<div class="time">${escapeHtml(it.time)}</div>`;
-      if (it.summary) html += `<div class="summary">${escapeHtml(it.summary)}</div>`;
+  for (const tp of DATA.topics) {
+    html += `<article class="topic-card">`;
+    html += `<div class="topic-head">`;
+    html += `<a class="topic-title" href="${tp.items[0].link}" target="_blank" rel="noopener">${esc(tp.title)}</a>`;
+    html += `<span class="topic-badge">${tp.count} 条</span>`;
+    html += `</div>`;
+    html += `<div class="source-tags">`;
+    tp.sources.forEach(s => { html += `<span class="source-tag">${esc(s)}</span>`; });
+    html += `</div>`;
+
+    // 摘要（展开/收缩）
+    if (tp.summary) {
+      const short = tp.summary.length > 80 ? tp.summary.slice(0, 80) + '…' : tp.summary;
+      html += `<div class="summary-box">`;
+      html += `<div class="summary-text">${esc(short)}</div>`;
+      if (tp.summary.length > 80) {
+        html += `<div class="summary-text summary-full">${esc(tp.summary)}</div>`;
+        html += `<button class="summary-toggle" onclick="toggleSummary(this)">展开全文</button>`;
+      }
       html += `</div>`;
     }
-    html += `</section>`;
+
+    // 相关新闻
+    html += `<div class="topic-links">`;
+    tp.items.forEach(it => {
+      html += `<a class="topic-link" href="${it.link}" target="_blank" rel="noopener">`;
+      html += `<span class="src">${esc(it.source)}</span><span>${esc(it.title)}</span>`;
+      html += `</a>`;
+    });
+    html += `</div></article>`;
   }
   app.innerHTML = html;
 
-  const footer = document.getElementById('footer');
-  footer.textContent = '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新）';
+  document.getElementById('footer').textContent = '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新）';
 }
 
-function escapeHtml(s) {
+function toggleSummary(btn) {
+  const box = btn.closest('.summary-box');
+  const short = box.querySelector('.summary-text');
+  const full = box.querySelector('.summary-full');
+  if (full) {
+    const isOpen = full.style.display === 'block';
+    full.style.display = isOpen ? 'none' : 'block';
+    short.style.display = isOpen ? 'block' : 'none';
+    btn.textContent = isOpen ? '展开全文' : '收起';
+  }
+}
+
+function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
