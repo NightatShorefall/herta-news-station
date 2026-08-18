@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黑塔新闻站</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1f2328;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --hover: #f3f4f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  h1 { font-size: 1.6rem; font-weight: 700; }
+  .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+  .source-block {
+    margin-bottom: 28px;
+  }
+  .source-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .source-head .count {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 10px;
+    padding: 1px 9px;
+    font-weight: 500;
+  }
+  .news-item {
+    padding: 10px 8px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-item a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+  }
+  .news-item a:hover { color: var(--accent); }
+  .news-item .time {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+  .news-item .summary {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>黑塔新闻站</h1>
+  <div class="meta" id="meta"></div>
+</header>
+
+<main id="app"></main>
+
+<footer id="footer"></footer>
+
+<script>
+const DATA = __JSON_DATA__;
+
+function render() {
+  const meta = document.getElementById('meta');
+  meta.textContent = `${DATA.date} · 共 ${DATA.total} 条 · 更新于 ${DATA.generated_at}`;
+
+  const app = document.getElementById('app');
+  // 按来源分组
+  const groups = {};
+  for (const item of DATA.news) {
+    if (!groups[item.source]) groups[item.source] = [];
+    groups[item.source].push(item);
+  }
+
+  const order = ['新华网', '人民网', '央视网', '中新网'];
+  const sortedSources = Object.keys(groups).sort((a, b) => {
+    return order.indexOf(a) - order.indexOf(b);
+  });
+
+  let html = '';
+  for (const src of sortedSources) {
+    const items = groups[src];
+    html += `<section class="source-block">`;
+    html += `<div class="source-head">${src}<span class="count">${items.length}</span></div>`;
+    for (const it of items) {
+      html += `<div class="news-item">`;
+      html += `<a href="${it.link}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>`;
+      if (it.time) html += `<div class="time">${escapeHtml(it.time)}</div>`;
+      if (it.summary) html += `<div class="summary">${escapeHtml(it.summary)}</div>`;
+      html += `</div>`;
+    }
+    html += `</section>`;
+  }
+  app.innerHTML = html;
+
+  const footer = document.getElementById('footer');
+  footer.textContent = '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新）';
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+render();
+</script>
+</body>
+</html>
