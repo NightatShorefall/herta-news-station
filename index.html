@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>黑塔新闻站</title>
+<title>黑塔空间站</title>
 <style>
   :root {
     --purple: #8b5cf6;
@@ -88,12 +88,36 @@
     box-shadow: 0 4px 18px rgba(0,0,0,.3);
     flex-shrink: 0;
   }
-  .hero-text h1 {
-    font-size: 1.6rem; font-weight: 800;
-    letter-spacing: 4px;
-    background: linear-gradient(90deg, #fff 0%, #f5f3ff 55%, #ddd6fe 100%);
+  .hero-text h1 { display: none; }
+  /* ===== 艺术字 LOGO（游戏标题感） ===== */
+  .logo {
+    display: inline-flex; gap: 2px;
+    font-size: 2.3rem; font-weight: 900;
+    letter-spacing: 3px;
+    font-style: italic;
+    user-select: none;
+    line-height: 1.15;
+  }
+  .logo span {
+    display: inline-block;
+    background: linear-gradient(180deg, #ffffff 0%, #fdf4ff 25%, #f5d0fe 55%, #c084fc 80%, #a78bfa 100%);
     -webkit-background-clip: text; background-clip: text;
     color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,.3);
+    filter: drop-shadow(0 3px 0 rgba(59,15,143,.6)) drop-shadow(0 8px 18px rgba(59,15,143,.5));
+    transform: rotate(-3deg) translateY(-2px);
+  }
+  .logo span:nth-child(2) { transform: rotate(2deg) translateY(2px); }
+  .logo span:nth-child(3) { transform: rotate(-1.5deg) translateY(-1px); font-size: 1.08em; }
+  .logo span:nth-child(4) { transform: rotate(2.5deg) translateY(3px); }
+  .logo span:nth-child(5) { transform: rotate(-2deg) translateY(0); }
+  .logo .lg-star {
+    font-size: .7em; line-height: 1;
+    transform: translateY(-6px) rotate(8deg);
+    color: #fde68a;
+    -webkit-text-stroke: 0;
+    filter: drop-shadow(0 2px 6px rgba(253,230,138,.6));
+    background: none;
   }
   .slogan {
     margin-top: 4px;
@@ -173,9 +197,13 @@
   }
   .thumb-char {
     position: absolute; bottom: 8px; left: 12px;
-    font-size: 1.9rem; font-weight: 800; color: #fff;
+    font-size: 2rem; font-weight: 900; font-style: italic;
     letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0,0,0,.35);
+    background: linear-gradient(180deg, #ffffff 15%, #f5d0fe 55%, #c4b5fd 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(76,29,149,.85);
+    filter: drop-shadow(0 3px 0 rgba(59,15,143,.7)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
   }
   .thumb-count {
     position: absolute; top: 8px; right: 8px;
@@ -244,7 +272,7 @@
 <!-- 顶部导航 + 来源筛选 -->
 <div class="topbar">
   <div class="topbar-inner">
-    <span class="topbar-logo">✦ 黑塔新闻站</span>
+    <span class="topbar-logo">✦ 黑塔空间站</span>
     <div class="filters" id="filters"></div>
   </div>
 </div>
@@ -255,7 +283,9 @@
   <div class="hero-inner">
     <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="黑塔">
     <div class="hero-text">
-      <h1>黑塔新闻站</h1>
+      <h1 class="logo" aria-label="黑塔空间站">
+        <span>黑</span><span>塔</span><span>空</span><span>间</span><span>站</span><span class="lg-star">✦</span>
+      </h1>
       <div class="slogan"><span class="star">✦</span> 黑塔女士为您播报今日要闻 <span class="star">✦</span></div>
       <div class="meta" id="meta"></div>
     </div>
