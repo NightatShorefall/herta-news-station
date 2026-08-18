@@ -9,80 +9,136 @@
     --purple: #8b5cf6;
     --purple-dark: #7c3aed;
     --purple-deep: #5b21b6;
-    --purple-light: #ede9fe;
+    --purple-ink: #4c1d95;
     --bg: #ffffff;
     --fg: #1f2328;
     --muted: #6b7280;
-    --border: #e5e7eb;
+    --border: #eef0f4;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: var(--bg);
+    background: #fbfaff;
     color: var(--fg);
     line-height: 1.55;
   }
 
-  /* ===== 头部 ===== */
+  /* ===== 顶部导航条（严谨感 + 来源筛选） ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .topbar-logo {
+    font-weight: 800; font-size: .95rem;
+    background: linear-gradient(90deg, var(--purple-ink), var(--purple));
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .f-btn {
+    font-size: .75rem; padding: 4px 12px;
+    border-radius: 20px; cursor: pointer;
+    border: 1px solid #e4e0f7;
+    background: #fff; color: var(--muted);
+    transition: all .15s ease;
+  }
+  .f-btn:hover { border-color: var(--purple); color: var(--purple); }
+  .f-btn.active {
+    background: linear-gradient(90deg, var(--purple-ink), var(--purple));
+    border-color: transparent; color: #fff; font-weight: 600;
+  }
+
+  /* ===== Hero（二次元氛围） ===== */
   .hero {
-    background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 45%, #8b5cf6 100%);
-    padding: 22px 20px 44px;
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(130deg, #3b0f8f 0%, #5b21b6 40%, #7c3aed 75%, #8b5cf6 100%);
+    padding: 26px 20px 52px;
+    position: relative; overflow: hidden;
   }
-  .hero::before, .hero::after {
-    content: ""; position: absolute; border-radius: 50%;
-    background: rgba(255,255,255,.07);
+  .hero-bg {
+    position: absolute; right: -40px; top: -30px;
+    width: 380px; height: 380px;
+    background-image: url('images/991D5CF2E798946D51C49B5835E8E393.webp');
+    background-size: cover; background-position: center;
+    opacity: .35; transform: rotate(6deg);
+    border-radius: 30px;
+    mask-image: linear-gradient(to left, #000 60%, transparent);
+    -webkit-mask-image: linear-gradient(to left, #000 60%, transparent);
   }
-  .hero::before { width: 200px; height: 200px; top: -80px; right: -40px; }
-  .hero::after { width: 130px; height: 130px; bottom: -60px; left: 32%; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.12), transparent 40%);
+  }
   .hero-inner {
     max-width: 1080px; margin: 0 auto;
     position: relative; z-index: 2;
-    display: flex; align-items: center; gap: 16px;
+    display: flex; align-items: center; gap: 18px;
   }
   .hero-img {
-    width: 56px; height: 56px; border-radius: 50%;
+    width: 64px; height: 64px; border-radius: 50%;
     object-fit: cover;
     border: 2.5px solid rgba(255,255,255,.9);
-    box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    box-shadow: 0 4px 18px rgba(0,0,0,.3);
     flex-shrink: 0;
   }
   .hero-text h1 {
-    font-size: 1.55rem; font-weight: 800;
-    letter-spacing: 3px;
-    background: linear-gradient(90deg, #fff 0%, #f5f3ff 50%, #ddd6fe 100%);
+    font-size: 1.6rem; font-weight: 800;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #fff 0%, #f5f3ff 55%, #ddd6fe 100%);
     -webkit-background-clip: text; background-clip: text;
     color: transparent;
-    text-shadow: 0 0 24px rgba(255,255,255,.15);
   }
-  .hero-text .meta {
-    font-size: .82rem; color: #e9d5ff;
-    margin-top: 4px; letter-spacing: .5px;
+  .slogan {
+    margin-top: 4px;
+    font-size: .8rem; color: #e9d5ff; letter-spacing: 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .slogan .star { color: #fde68a; }
+  .meta {
+    font-size: .78rem; color: #d8ccf7;
+    margin-top: 6px; letter-spacing: .5px;
   }
 
-  /* ===== 表情皮肤墙（紧凑横条） ===== */
+  /* ===== 表情皮肤墙 ===== */
   .skin-wall {
-    max-width: 1080px; margin: -26px auto 0;
-    padding: 0 20px; position: relative; z-index: 3;
+    max-width: 1080px; margin: -30px auto 0;
+    padding: 0 20px; position: relative; z-index: 5;
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
   }
   .skin-wall img {
-    width: 100%; aspect-ratio: 16/7;
+    width: 100%; aspect-ratio: 16/6.5;
     object-fit: cover; border-radius: 12px;
-    border: 2.5px solid #fff;
-    box-shadow: 0 4px 14px rgba(91,33,182,.2);
+    border: 3px solid #fff;
+    box-shadow: 0 5px 16px rgba(76,29,149,.22);
     transition: transform .2s ease;
     cursor: pointer;
   }
-  .skin-wall img:hover { transform: translateY(-3px); }
+  .skin-wall img:hover { transform: translateY(-3px) scale(1.01); }
 
-  /* ===== 方块网格（B站风格） ===== */
-  main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 50px; }
+  /* ===== 主内容 ===== */
+  main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 40px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: 1rem; font-weight: 800; letter-spacing: 1px;
+    color: var(--purple-ink);
+  }
+  .section-title::before { content: "✦ "; color: var(--purple); }
+  .section-count { font-size: .78rem; color: var(--muted); }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    gap: 16px;
   }
   .card {
     background: #fff;
@@ -90,102 +146,123 @@
     border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     display: flex; flex-direction: column;
   }
   .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 26px rgba(139,92,246,.18);
+    box-shadow: 0 12px 28px rgba(124,58,237,.16);
     border-color: #ddd6fe;
   }
-  /* 缩略图 */
+  /* 缩略图：黑塔图 + 渐变叠加 */
   .thumb {
     position: relative;
     aspect-ratio: 16/10;
-    display: flex; align-items: center; justify-content: center;
     overflow: hidden;
+    background: var(--purple-deep);
   }
-  .thumb .thumb-bg {
+  .thumb-img {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, #7c3aed, #a78bfa);
-    opacity: .92;
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .3s ease;
   }
-  .thumb .thumb-char {
-    position: relative;
-    font-size: 2.2rem; font-weight: 800; color: rgba(255,255,255,.92);
+  .card:hover .thumb-img { transform: scale(1.05); }
+  .thumb-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(76,29,149,.88) 0%, rgba(124,58,237,.25) 55%, rgba(124,58,237,.05) 100%);
+  }
+  .thumb-char {
+    position: absolute; bottom: 8px; left: 12px;
+    font-size: 1.9rem; font-weight: 800; color: #fff;
     letter-spacing: 2px;
-    text-shadow: 0 2px 12px rgba(0,0,0,.2);
+    text-shadow: 0 2px 10px rgba(0,0,0,.35);
   }
-  .thumb .thumb-count {
+  .thumb-count {
     position: absolute; top: 8px; right: 8px;
-    background: rgba(255,255,255,.92); color: var(--purple-deep);
-    font-size: .68rem; font-weight: 700;
+    background: rgba(255,255,255,.94); color: var(--purple-deep);
+    font-size: .66rem; font-weight: 700;
     padding: 2px 8px; border-radius: 10px;
   }
-  .thumb .thumb-srcs {
-    position: absolute; bottom: 8px; left: 8px;
-    display: flex; gap: 4px; flex-wrap: wrap;
+  .thumb-srcs {
+    position: absolute; bottom: 10px; right: 12px;
+    display: flex; gap: 4px;
   }
-  .thumb .thumb-srcs span {
-    background: rgba(0,0,0,.42); color: #fff;
-    font-size: .64rem; padding: 1px 7px; border-radius: 8px;
-    backdrop-filter: blur(4px);
+  .thumb-srcs .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.5);
   }
   /* 卡片体 */
-  .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; flex: 1; }
+  .card-body { padding: 11px 13px 13px; display: flex; flex-direction: column; flex: 1; }
   .card-title {
-    font-size: .95rem; font-weight: 700; line-height: 1.45;
+    font-size: .94rem; font-weight: 700; line-height: 1.45;
+    color: var(--fg); text-decoration: none;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.9em;
+    min-height: 2.75em;
+    transition: color .15s ease;
   }
+  .card-title:hover { color: var(--purple); }
   .card-meta {
-    margin-top: 8px;
+    margin-top: auto; padding-top: 9px;
     display: flex; align-items: center; gap: 6px;
   }
-  .card-meta .src-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
   .card-meta .src-name { font-size: .72rem; color: var(--muted); }
   .card-meta .sep { flex: 1; }
   .card-meta .toggle-btn {
     font-size: .72rem; color: var(--purple); font-weight: 600;
     background: none; border: none; cursor: pointer; padding: 2px 0;
+    display: flex; align-items: center; gap: 3px;
   }
   .card-meta .toggle-btn:hover { text-decoration: underline; }
-  /* 摘要（默认收起） */
   .card-summary {
     display: none;
-    margin-top: 10px; padding: 9px 11px;
+    margin-top: 9px; padding: 9px 11px;
     background: #faf9ff; border-left: 3px solid var(--purple);
     border-radius: 0 8px 8px 0;
-    font-size: .82rem; color: #374151; line-height: 1.7;
+    font-size: .8rem; color: #3f3f46; line-height: 1.7;
   }
   .card.open .card-summary { display: block; }
 
   footer {
-    text-align: center; color: var(--muted); font-size: .78rem;
-    margin-top: 30px; border-top: 1px solid var(--border); padding: 14px 0 20px;
+    max-width: 1080px; margin: 0 auto;
+    text-align: center; color: var(--muted); font-size: .76rem;
+    border-top: 1px solid var(--border); padding: 16px 20px 26px;
   }
+  footer .credit { margin-top: 4px; opacity: .8; }
 
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) {
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .skin-wall { grid-template-columns: repeat(2, 1fr); }
-    .card-title { font-size: .88rem; }
+    .hero-bg { width: 220px; height: 220px; }
+    .card-title { font-size: .86rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- 顶部导航 + 来源筛选 -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-logo">✦ 黑塔新闻站</span>
+    <div class="filters" id="filters"></div>
+  </div>
+</div>
+
+<!-- Hero -->
 <header class="hero">
+  <div class="hero-bg"></div>
   <div class="hero-inner">
     <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="黑塔">
     <div class="hero-text">
       <h1>黑塔新闻站</h1>
+      <div class="slogan"><span class="star">✦</span> 黑塔女士为您播报今日要闻 <span class="star">✦</span></div>
       <div class="meta" id="meta"></div>
     </div>
   </div>
 </header>
 
+<!-- 表情皮肤墙 -->
 <div class="skin-wall">
   <img src="images/031CD5CAA7B0D9C5FCED78A85DD81613.webp" alt="表情1" loading="lazy" onclick="window.open(this.src,'_blank')">
   <img src="images/991D5CF2E798946D51C49B5835E8E393.webp" alt="表情2" loading="lazy" onclick="window.open(this.src,'_blank')">
@@ -194,55 +271,94 @@
 </div>
 
 <main>
+  <div class="section-head">
+    <span class="section-title">今日跨站要闻</span>
+    <span class="section-count" id="count"></span>
+  </div>
   <div class="grid" id="app"></div>
 </main>
 
-<footer id="footer"></footer>
+<footer>
+  <div>数据来源：新华网 · 人民网 · 央视网 · 中新网（每日 08:00 自动更新）</div>
+  <div class="credit">新闻内容及版权归原网站所有 · 本页仅作信息聚合展示</div>
+</footer>
 
 <script>
 const DATA = {"date": "2026-08-18", "generated_at": "2026-08-18 23:58:27", "stat": {"中新网": 30, "央视网": 6, "人民网": 111, "新华网": 147}, "total": 26, "topics": [{"id": 14, "title": "三部门发文优化城乡社区岗位吸纳高校毕业生就业", "summary": "三部门发文优化城乡社区岗位吸纳高校毕业生就业。中新网8月18日电 据人社部网站消息，为深入贯彻党中央关于稳就业、稳企业、稳市场、稳预期决策部署，进一步优化城乡社区岗位，吸纳更多高校毕业生到基层就业，日前，人力资源社会保障部、中央社会工作部、民政部联合印发《关于优化城乡社区岗位吸纳高校毕业生就业工作的通知》(以下简称《通知》)，提出系列政策举措，全力促进更多高校毕业生到城乡社区就业，为加强基层治理体系和治理能力现代化提供坚实人才支撑。八部……", "sources": ["中新网", "央视网", "人民网", "新华网"], "count": 8, "items": [{"title": "三部门发文优化城乡社区岗位吸纳高校毕业生就业", "link": "https://www.chinanews.com.cn/gn/2026/08-18/10679954.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新网8月18日电 据人社部网站消息，为深入贯彻党中央关于稳就业、稳企业、稳市场、稳预期决策部署，进一步优化城乡社区岗位，吸纳更多高校毕业生到基层就业，日前，人力资源社会保障部、中央社会工作部、民政部联合印发《关于优化城乡社区岗位吸纳高校毕业生就业工作的通知》(以下简称《通知》)，提出系列政策举措，全力促进更多高校毕业生到城乡社区就业，为加强基层治理体系和治理能力现代化提供坚实人才支撑。"}, {"title": "八部门联合发文保障农业灌溉用水安全", "link": "https://tv.cctv.com/2026/08/18/VIDEClZGcaF6XC9vksGiazbs260818.shtml", "source": "央视网", "time": "2026-08-18", "summary": ""}, {"title": "9部门发文活跃县域消费", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781549.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "多部门发文进一步保障农业灌溉用水安全", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781365.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "多部门详解活跃县域消费18条举措", "link": "https://www.news.cn/fortune/20260818/fd2612ed3c9c4c4e969b9d49058e7de3/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "三部门发文优化城乡社区岗位吸纳高校毕业生就业", "link": "https://www.news.cn/politics/20260818/9290321fd03443f085540f223cd6c77d/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "多部门发文进一步保障农业灌溉用水安全", "link": "/government/20260818/0da8266c9c4d46b3829804bbe1a23ebe/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "9部门发文激发下沉市场活力 活跃县域消费", "link": "https://www.news.cn/fortune/20260818/370d293b9eff469dbb78a428bc34919e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 62, "title": "延榆高铁全线最长隧道掘进突破万米大关", "summary": "延榆高铁全线最长隧道掘进突破万米大关。世界最长海底高铁隧道完成带压盾构换刀。宜兴高铁试运行 全线开通运营进入倒计时。雄忻高铁开启静态验收 预计明年3月底具备开通条件", "sources": ["人民网", "新华网"], "count": 5, "items": [{"title": "延榆高铁全线最长隧道掘进突破万米大关", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781920.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "世界最长海底高铁隧道完成带压盾构换刀", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781371.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "宜兴高铁试运行 全线开通运营进入倒计时", "link": "https://www.news.cn/local/20260818/653f03ecaf324fa98e3c9dcbe7d769bd/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "雄忻高铁开启静态验收 预计明年3月底具备开通条件", "link": "https://www.news.cn/local/20260818/b96e5039502f44aeafbe07a719b14e22/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "延榆高铁全线最长隧道掘进突破万米大关", "link": "https://www.news.cn/fortune/20260818/19b50c3dcb8a42d2b90d2dcb842f97fc/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 6, "title": "特朗普：未与伊朗进行任何会谈 未来也无相关计划", "summary": "特朗普：未与伊朗进行任何会谈 未来也无相关计划。当地时间8月18日，美国总统特朗普在社交媒体平台“真实社交”上发文表示，目前并未与伊朗进行任何会谈或对话，未来也无相关计划。特朗普：目前和未来不会与伊朗进行任何会谈或对话。中新网8月18日电 当地时间18日，美国总统特朗普在社交媒体发文称，目前和未来不会与伊朗进行任何会谈或对话。60天窗口期满 伊朗设最后期限 特朗普称“我不着急”。特朗普说不会再与伊会谈", "sources": ["中新网", "央视网", "新华网"], "count": 4, "items": [{"title": "特朗普：未与伊朗进行任何会谈 未来也无相关计划", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679966.shtml", "source": "中新网", "time": "2026-08-18", "summary": "当地时间8月18日，美国总统特朗普在社交媒体平台“真实社交”上发文表示，目前并未与伊朗进行任何会谈或对话，未来也无相关计划。"}, {"title": "特朗普：目前和未来不会与伊朗进行任何会谈或对话", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679945.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新网8月18日电 当地时间18日，美国总统特朗普在社交媒体发文称，目前和未来不会与伊朗进行任何会谈或对话。"}, {"title": "60天窗口期满 伊朗设最后期限 特朗普称“我不着急”", "link": "https://news.cctv.com/2026/08/18/ARTIfoEo3XrO3Habjslrqmpa260818.shtml", "source": "央视网", "time": "2026-08-18", "summary": ""}, {"title": "特朗普说不会再与伊会谈", "link": "https://www.news.cn/world/20260818/641c3bd076c041259746c8cc9962b2cc/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 34, "title": "习近平李强赵乐际王沪宁蔡奇丁薛祥李希韩正等到八宝山革命公墓送别", "summary": "习近平李强赵乐际王沪宁蔡奇丁薛祥李希韩正等到八宝山革命公墓送别。朱镕基同志遗体在京火化 习近平等到八宝山革命公墓送别。朱镕基同志遗体在京火化", "sources": ["人民网", "新华网"], "count": 4, "items": [{"title": "习近平李强赵乐际王沪宁蔡奇丁薛祥李希韩正等到八宝山革命公墓送别", "link": "http://politics.people.com.cn/n1/2026/0818/c1024-40781843.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "朱镕基同志遗体在京火化 习近平等到八宝山革命公墓送别", "link": "http://pic.people.com.cn/n1/2026/0818/c426981-40781890.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "朱镕基同志遗体在京火化 习近平等到八宝山革命公墓送别", "link": "https://www.news.cn/politics/leaders/20260818/14709cee39904ce586d7a81af7d5eb2b/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "朱镕基同志遗体在京火化", "link": "https://www.news.cn/politics/leaders/20260818/5228fec8b7c64d52a25338766efe7bc0/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 2, "title": "泰国前7个月吸引外资额同比增长37%", "summary": "泰国前7个月吸引外资额同比增长37%。中新社曼谷8月18日电 (记者 李映民)泰国商业部商业发展厅18日公布的最新数据显示，2026年前7个月，共有736家外资企业获准落户泰国，同比增长26%；投资总额达2192.08亿泰铢，较去年同期增加597.48亿泰铢，增幅达37%。天津邮轮口岸暑期出入境旅客同比增长近两成。前7个月我国工业机器人产量同比增长28.5%", "sources": ["中新网", "新华网"], "count": 3, "items": [{"title": "泰国前7个月吸引外资额同比增长37%", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679970.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新社曼谷8月18日电 (记者 李映民)泰国商业部商业发展厅18日公布的最新数据显示，2026年前7个月，共有736家外资企业获准落户泰国，同比增长26%；投资总额达2192.08亿泰铢，较去年同期增加597.48亿泰铢，增幅达37%。"}, {"title": "天津邮轮口岸暑期出入境旅客同比增长近两成", "link": "https://www.news.cn/local/20260818/d2216f8f882f4315ac19828fece199bf/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "前7个月我国工业机器人产量同比增长28.5%", "link": "https://www.news.cn/info/20260818/13e7e4f2d71e442c86cc2657f5d78eb4/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 19, "title": "2026澳门青年创新创业大赛决赛举行 推动项目对接产业资源", "summary": "2026澳门青年创新创业大赛决赛举行 推动项目对接产业资源。中新网澳门8月18日电 (记者 郑嘉伟)2026澳门青年创新创业大赛总决赛及颁奖礼18日在澳门科学馆举行。澳门项目“下一代光子—电子—自旋磁混合自学习芯片”和中国内地项目“面向高频通讯的高性能钙钛矿超显芯片材料”分获初创团队组、企业公开组冠军。中拉青年为“2026减贫营”贡献创新方案。市场监管部门加强商业秘密保护 助力产业创新发展", "sources": ["中新网", "人民网", "新华网"], "count": 3, "items": [{"title": "2026澳门青年创新创业大赛决赛举行 推动项目对接产业资源", "link": "https://www.chinanews.com.cn/dwq/2026/08-18/10679947.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新网澳门8月18日电 (记者 郑嘉伟)2026澳门青年创新创业大赛总决赛及颁奖礼18日在澳门科学馆举行。澳门项目“下一代光子—电子—自旋磁混合自学习芯片”和中国内地项目“面向高频通讯的高性能钙钛矿超显芯片材料”分获初创团队组、企业公开组冠军。"}, {"title": "中拉青年为“2026减贫营”贡献创新方案", "link": "http://world.people.com.cn/n1/2026/0818/c1002-40781580.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "市场监管部门加强商业秘密保护 助力产业创新发展", "link": "https://www.news.cn/fortune/20260818/73bf0c2e12dd46d1bf68054b78d5f06e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 36, "title": "习近平同厄瓜多尔总统会谈", "summary": "习近平同厄瓜多尔总统会谈。习近平同厄瓜多尔总统诺沃亚会谈", "sources": ["人民网", "新华网"], "count": 3, "items": [{"title": "习近平同厄瓜多尔总统会谈", "link": "http://politics.people.com.cn/n1/2026/0818/c1024-40781914.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "习近平同厄瓜多尔总统诺沃亚会谈", "link": "http://pic.people.com.cn/n1/2026/0818/c426981-40781947.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "习近平同厄瓜多尔总统诺沃亚会谈", "link": "https://www.news.cn/politics/leaders/20260818/a15e6eee8d7e4779aaf4c75567848e49/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 42, "title": "前7个月经济数据,这个\"50.9%\"很关键", "summary": "前7个月经济数据,这个\"50.9%\"很关键。7组数据看7月经济“含新量”攀升。从前7个月数据看中国经济", "sources": ["人民网", "新华网"], "count": 3, "items": [{"title": "前7个月经济数据,这个\"50.9%\"很关键", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781950.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "7组数据看7月经济“含新量”攀升", "link": "https://www.news.cn/fortune/20260818/49f2b704a49141e89bba619cab463a11/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "从前7个月数据看中国经济", "link": "https://www.news.cn/fortune/20260818/9b833a6d30fe4a29a8e7c44da1e13dbb/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 48, "title": "中老铁路货物运输突破9000万吨", "summary": "中老铁路货物运输突破9000万吨。浩吉铁路发运货物列车突破10万列", "sources": ["人民网", "新华网"], "count": 3, "items": [{"title": "中老铁路货物运输突破9000万吨", "link": "http://society.people.com.cn/n1/2026/0818/c1008-40781836.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "中老铁路货物运输突破9000万吨", "link": "https://www.news.cn/world/20260818/5963d697636e41e6ba710907c578dba9/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}, {"title": "浩吉铁路发运货物列车突破10万列", "link": "https://www.news.cn/photo/20260818/bcd01fd5f2324757a8406ff3737e4e4e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 82, "title": "暑期托管，如何打开育人新方式", "summary": "暑期托管，如何打开育人新方式。暑期托管重在和孩子共同生活。关怀——为学生打造多彩暑期生活", "sources": ["人民网", "新华网"], "count": 3, "items": [{"title": "暑期托管，如何打开育人新方式", "link": "http://edu.people.com.cn/n1/2026/0818/c1006-40781524.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "暑期托管重在和孩子共同生活", "link": "http://edu.people.com.cn/n1/2026/0818/c1006-40781506.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "关怀——为学生打造多彩暑期生活", "link": "https://www.news.cn/photo/20260818/5ecf18a060c1465aab682b5f76b59679/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 4, "title": "首届电竞世界杯推迟至2027年举行", "summary": "首届电竞世界杯推迟至2027年举行。总部位于沙特阿拉伯利雅得的电竞发展基金会18日宣布，首届电竞世界杯将推迟至2027年11月举行", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "首届电竞世界杯推迟至2027年举行", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679968.shtml", "source": "中新网", "time": "2026-08-18", "summary": "总部位于沙特阿拉伯利雅得的电竞发展基金会18日宣布，首届电竞世界杯将推迟至2027年11月举行。"}, {"title": "首届电竞世界杯推迟至2027年举行", "link": "https://www.news.cn/20260818/72f240bcfa844fe78604cf82a6a0a038/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 9, "title": "伊朗最高领袖据称将在德黑兰主持活动", "summary": "伊朗最高领袖据称将在德黑兰主持活动。据伊朗方面18日消息，伊朗最高领袖即将在德黑兰主持一场宗教活动。伊媒：伊朗最高领袖将在德黑兰主持一场宗教活动", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "伊朗最高领袖据称将在德黑兰主持活动", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679965.shtml", "source": "中新网", "time": "2026-08-18", "summary": "据伊朗方面18日消息，伊朗最高领袖即将在德黑兰主持一场宗教活动。"}, {"title": "伊媒：伊朗最高领袖将在德黑兰主持一场宗教活动", "link": "https://www.news.cn/world/20260818/8ffc044ee6234bd7b4f5c6cc35084c7e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 11, "title": "美国30年期国债收益率创19年新高", "summary": "美国30年期国债收益率创19年新高。当地时间18日，美国财政部公布的最新数据显示，美国30年期国债收益率17日达5.31%，创下2007年6月以来新高", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "美国30年期国债收益率创19年新高", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679964.shtml", "source": "中新网", "time": "2026-08-18", "summary": "当地时间18日，美国财政部公布的最新数据显示，美国30年期国债收益率17日达5.31%，创下2007年6月以来新高。"}, {"title": "美国30年期国债收益率创19年新高", "link": "https://www.news.cn/world/20260818/f0c60ed1d2d84a1c98d9542b08eb07f0/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 12, "title": "欧盟提议将以色列国家安全部长列入制裁名单", "summary": "欧盟提议将以色列国家安全部长列入制裁名单。欧盟外交与安全政策首席发言人阿妮塔·希佩尔18日在布鲁塞尔举行的新闻发布会上表示，已向各成员国提交提案，建议将以色列国家安全部长本-格维尔列入制裁名单", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "欧盟提议将以色列国家安全部长列入制裁名单", "link": "https://www.chinanews.com.cn/gj/2026/08-18/10679962.shtml", "source": "中新网", "time": "2026-08-18", "summary": "欧盟外交与安全政策首席发言人阿妮塔·希佩尔18日在布鲁塞尔举行的新闻发布会上表示，已向各成员国提交提案，建议将以色列国家安全部长本-格维尔列入制裁名单。"}, {"title": "欧盟提议将以色列国家安全部长列入制裁名单", "link": "https://www.news.cn/world/20260818/d37ac511fdc640bca693eaa164bbc3c1/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 16, "title": "开局起步“十五五”：“六个之城”描绘海口新愿景", "summary": "开局起步“十五五”：“六个之城”描绘海口新愿景。中新网海口8月18日电 (张茜翼 张芷懿)未来五年，海口将呈现怎样的图景。“自由便利开放之城、产城融合创新之城、时尚消费活力之城、低碳绿色生态之城、全龄宜居幸福之城、魅力海岛人文之城”——这六个关键词，给出清晰答案。“十五五”开局之年推进未来产业发展一线观察", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "开局起步“十五五”：“六个之城”描绘海口新愿景", "link": "https://www.chinanews.com.cn/cj/2026/08-18/10679949.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新网海口8月18日电 (张茜翼 张芷懿)未来五年，海口将呈现怎样的图景？“自由便利开放之城、产城融合创新之城、时尚消费活力之城、低碳绿色生态之城、全龄宜居幸福之城、魅力海岛人文之城”——这六个关键词，给出清晰答案。"}, {"title": "“十五五”开局之年推进未来产业发展一线观察", "link": "https://www.news.cn/20260818/79d7361c5bea4afc9ed30282b0c8afcf/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 27, "title": "中外青年沉浸式探访宁夏 友谊营架起丝路文明对话桥梁", "summary": "中外青年沉浸式探访宁夏 友谊营架起丝路文明对话桥梁。中新网银川8月18日电 (记者 于晶)“这是我首次到访宁夏，在这里处处感受到暖心的善意。我沉醉于宁夏浓郁的风土气息，银川这座城市更是留给我极为美好的印象。”闭营仪式上加拿大营员张李安(Leanne Zhang)的一席话，道出众多外籍营员的共同感受。18日，为期6天的2026宁夏国际青年友谊营在银川顺利闭营，各国青年以沉浸式体验、深度互动的方式读懂宁夏，搭建起感知中国、沟通世界的青年交流……", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "中外青年沉浸式探访宁夏 友谊营架起丝路文明对话桥梁", "link": "https://www.chinanews.com.cn/gn/2026/08-18/10679936.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新网银川8月18日电 (记者 于晶)“这是我首次到访宁夏，在这里处处感受到暖心的善意。我沉醉于宁夏浓郁的风土气息，银川这座城市更是留给我极为美好的印象。”闭营仪式上加拿大营员张李安(Leanne Zhang)的一席话，道出众多外籍营员的共同感受。18日，为期6天的2026宁夏国际青年友谊营在银川顺利闭营，各国青年以沉浸式体验、深度互动的方式读懂宁夏，搭建起感知中国、沟通世界的青年交流平台。"}, {"title": "镜头连中外丨两座雄关 一脉丝路——嘉峪关长城与佩特拉古城", "link": "https://www.news.cn/world/20260818/c3ce73f7dddf4da0be0c5e6fbf10cd48/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 29, "title": "中央政府驻澳门联络办公室：支持澳门在新一份五年规划引领下实现更好发展", "summary": "中央政府驻澳门联络办公室：支持澳门在新一份五年规划引领下实现更好发展。中新社澳门8月18日电 《澳门特别行政区经济和社会发展第三个五年规划(2026—2030年)》18日正式发布。中央人民政府驻澳门特别行政区联络办公室(简称“中央政府驻澳门联络办公室”)发言人当日就此发表谈话指出，“一规引未来”，支持澳门在新一份五年规划引领下实现更好发展，推动澳门各项事业迈上新台阶。“三五”规划正式公布 澳门迈向高质量发展新阶段", "sources": ["中新网", "新华网"], "count": 2, "items": [{"title": "中央政府驻澳门联络办公室：支持澳门在新一份五年规划引领下实现更好发展", "link": "https://www.chinanews.com.cn/dwq/2026/08-18/10679927.shtml", "source": "中新网", "time": "2026-08-18", "summary": "中新社澳门8月18日电 《澳门特别行政区经济和社会发展第三个五年规划(2026—2030年)》18日正式发布。中央人民政府驻澳门特别行政区联络办公室(简称“中央政府驻澳门联络办公室”)发言人当日就此发表谈话指出，“一规引未来”，支持澳门在新一份五年规划引领下实现更好发展，推动澳门各项事业迈上新台阶。"}, {"title": "“三五”规划正式公布 澳门迈向高质量发展新阶段", "link": "https://www.news.cn/gangao/20260818/2f93ba9910754241b1f92e881bc30932/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 37, "title": "公布关于修改《住房公积金管理条例》的决定", "summary": "公布关于修改《住房公积金管理条例》的决定。公布《国务院关于修改〈住房公积金管理条例〉的决定》", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "公布关于修改《住房公积金管理条例》的决定", "link": "http://politics.people.com.cn/n1/2026/0818/c1001-40781895.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "公布《国务院关于修改〈住房公积金管理条例〉的决定》", "link": "https://www.news.cn/politics/20260818/751363d15a8b48ceadedbaf60e9d06bc/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 38, "title": "赵乐际主持召开十四届全国人大常委会委员长会议", "summary": "赵乐际主持召开十四届全国人大常委会委员长会议", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "赵乐际主持召开十四届全国人大常委会委员长会议", "link": "http://politics.people.com.cn/n1/2026/0818/c1024-40781865.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "赵乐际主持召开十四届全国人大常委会委员长会议", "link": "https://www.news.cn/politics/leaders/20260818/01342564339e4091b6d3e379ac42619e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 45, "title": "俄外交部召见日本大使 提出强烈抗议", "summary": "俄外交部召见日本大使 提出强烈抗议。俄外交部：美方言论助长日本复仇主义和修正主义", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "俄外交部召见日本大使 提出强烈抗议", "link": "http://world.people.com.cn/n1/2026/0818/c1002-40781915.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "俄外交部：美方言论助长日本复仇主义和修正主义", "link": "https://www.news.cn/world/20260818/6bcd7fba7d644251933eca3351c4a15e/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 49, "title": "遵义会议会址修缮项目即将完工", "summary": "遵义会议会址修缮项目即将完工", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "遵义会议会址修缮项目即将完工", "link": "http://pic.people.com.cn/n1/2026/0818/c1016-40781954.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "遵义会议会址修缮项目即将完工", "link": "https://www.news.cn/photo/20260818/91de66a6cf89456cac7ccb30c9385888/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 61, "title": "2026上合组织数字经济论坛将共筑智启未来新篇章", "summary": "2026上合组织数字经济论坛将共筑智启未来新篇章", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "2026上合组织数字经济论坛将共筑智启未来新篇章", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781921.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "2026上合组织数字经济论坛将共筑智启未来新篇章", "link": "https://www.news.cn/fortune/20260818/4f39103add9a4dd7b48b65c008034d35/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 72, "title": "国内首个批量退役风电机组梯次利用项目启动", "summary": "国内首个批量退役风电机组梯次利用项目启动", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "国内首个批量退役风电机组梯次利用项目启动", "link": "http://finance.people.com.cn/n1/2026/0818/c1004-40781394.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "国内首个批量退役风电机组梯次利用项目启动", "link": "https://www.news.cn/tech/20260818/1997f05b53cf4e5094f1a1025e15b022/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 115, "title": "羽毛球世锦赛：卫冕冠军石宇奇遭遇“一轮游”", "summary": "羽毛球世锦赛：卫冕冠军石宇奇遭遇“一轮游”。羽毛球世锦赛：石宇奇首轮爆冷出局", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "羽毛球世锦赛：卫冕冠军石宇奇遭遇“一轮游”", "link": "http://ent.people.com.cn/n1/2026/0818/c1012-40781384.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "羽毛球世锦赛：石宇奇首轮爆冷出局", "link": "https://www.xinhuanet.com/sports/20260818/d0263bf56ed94be3b5ff648b8cd15571/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 121, "title": "一条“红飘带”带火暑期红色文化之旅", "summary": "一条“红飘带”带火暑期红色文化之旅。一条“红飘带”，带火暑期红色文化之旅", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "一条“红飘带”带火暑期红色文化之旅", "link": "http://ent.people.com.cn/n1/2026/0818/c1012-40781412.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "一条“红飘带”，带火暑期红色文化之旅", "link": "https://www.news.cn/culture/20260818/9b2cf7953a364299842b814b75e6857f/c.html?page=1", "source": "新华网", "time": "2026-08-18", "summary": ""}]}, {"id": 123, "title": "延缓近视不能只靠防控眼镜", "summary": "延缓近视不能只靠防控眼镜", "sources": ["人民网", "新华网"], "count": 2, "items": [{"title": "延缓近视不能只靠防控眼镜", "link": "http://health.people.com.cn/n1/2026/0818/c14739-40781395.html", "source": "人民网", "time": "2026-08-18", "summary": ""}, {"title": "延缓近视不能只靠防控眼镜", "link": "https://www.news.cn/sci-tech/20260818/2288df7713384b838b299ab86b6787e6/c.html", "source": "新华网", "time": "2026-08-18", "summary": ""}]}]};
 
-const GRADS = [
-  'linear-gradient(135deg,#5b21b6,#8b5cf6)',
-  'linear-gradient(135deg,#7c3aed,#a78bfa)',
-  'linear-gradient(135deg,#6d28d9,#c4b5fd)',
-  'linear-gradient(135deg,#8b5cf6,#ddd6fe)',
-  'linear-gradient(135deg,#4c1d95,#7c3aed)'
+const SRC_COLORS = {
+  '新华网': '#d72323',
+  '人民网': '#1d6fd6',
+  '央视网': '#0a9e6e',
+  '中新网': '#e07800'
+};
+const THUMBS = [
+  'images/9E00EF724EC4F35AB0FCB505C26EC23E.webp',
+  'images/031CD5CAA7B0D9C5FCED78A85DD81613.webp',
+  'images/991D5CF2E798946D51C49B5835E8E393.webp',
+  'images/EFD2AD77BB68E4FDE53F50FE548E8D69.webp'
 ];
 
-function render() {
-  document.getElementById('meta').textContent =
-    DATA.date + ' · 跨站要闻 ' + DATA.total + ' 条 · ' + DATA.generated_at.slice(11, 16) + ' 更新';
+let currentFilter = '全部';
+
+function renderFilters() {
+  const allSrcs = ['全部'];
+  DATA.topics.forEach(t => t.sources.forEach(s => { if (allSrcs.indexOf(s) < 0) allSrcs.push(s); }));
+  const f = document.getElementById('filters');
+  f.innerHTML = allSrcs.map(s =>
+    `<button class="f-btn ${s === currentFilter ? 'active' : ''}" data-src="${esc(s)}">${esc(s)}</button>`
+  ).join('');
+  f.querySelectorAll('.f-btn').forEach(btn => {
+    btn.onclick = () => {
+      currentFilter = btn.dataset.src;
+      renderFilters();
+      renderCards();
+    };
+  });
+}
+
+function renderCards() {
+  const topics = currentFilter === '全部'
+    ? DATA.topics
+    : DATA.topics.filter(t => t.sources.indexOf(currentFilter) >= 0);
+
+  document.getElementById('count').textContent = `共 ${topics.length} 条` +
+    (currentFilter !== '全部' ? ` · 来自 ${currentFilter}` : '');
 
   const app = document.getElementById('app');
   let html = '';
-  DATA.topics.forEach((tp, i) => {
-    const grad = GRADS[i % GRADS.length];
+  topics.forEach((tp, i) => {
+    const img = THUMBS[i % THUMBS.length];
     const char = tp.title.trim().charAt(0);
-    const srcs = tp.sources.join(' · ');
+    const dots = tp.sources.map(s =>
+      `<span class="dot" style="background:${SRC_COLORS[s] || '#8b5cf6'}" title="${esc(s)}"></span>`
+    ).join('');
+    const srcNames = tp.sources.join(' · ');
     html += `<article class="card" onclick="toggleCard(this)">`;
-    html += `<div class="thumb"><div class="thumb-bg" style="background:${grad}"></div>`;
+    html += `<div class="thumb">`;
+    html += `<img class="thumb-img" src="${img}" alt="" loading="lazy">`;
+    html += `<div class="thumb-overlay"></div>`;
     html += `<span class="thumb-char">${esc(char)}</span>`;
     html += `<span class="thumb-count">${tp.sources.length} 家报道</span>`;
-    html += `<span class="thumb-srcs">${tp.sources.map(s => `<span>${esc(s)}</span>`).join('')}</span>`;
+    html += `<span class="thumb-srcs">${dots}</span>`;
     html += `</div>`;
     html += `<div class="card-body">`;
     html += `<a class="card-title" href="${tp.items[0].link}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(tp.title)}</a>`;
     html += `<div class="card-meta">`;
-    html += `<span class="src-dot"></span><span class="src-name">${esc(srcs)}</span>`;
-    html += `<span class="sep"></span><button class="toggle-btn" onclick="event.stopPropagation();toggleCard(this.closest('.card'))">摘要</button>`;
+    html += `<span class="src-name">${esc(srcNames)}</span>`;
+    html += `<span class="sep"></span>`;
+    html += `<button class="toggle-btn" onclick="event.stopPropagation();toggleCard(this.closest('.card'))">摘要 ▾</button>`;
     html += `</div>`;
     html += `<div class="card-summary">${esc(tp.summary)}</div>`;
     html += `</div></article>`;
   });
   app.innerHTML = html;
-
-  document.getElementById('footer').textContent =
-    '数据来源：新华网 · 人民网 · 央视网 · 中新网（每日自动更新，仅保留跨站要闻）';
 }
 
 function toggleCard(card) {
   card.classList.toggle('open');
+  const btn = card.querySelector('.toggle-btn');
+  if (btn) btn.textContent = card.classList.contains('open') ? '收起 ▴' : '摘要 ▾';
 }
 
 function esc(s) {
@@ -251,7 +367,11 @@ function esc(s) {
   }[c]));
 }
 
-render();
+document.getElementById('meta').textContent =
+  DATA.date + ' · ' + DATA.total + ' 条跨站要闻 · ' + DATA.generated_at + ' 更新';
+
+renderFilters();
+renderCards();
 </script>
 </body>
 </html>
