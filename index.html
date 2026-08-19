@@ -96,36 +96,44 @@
   }
   .tool-btn:hover { border-color: var(--purple); transform: scale(1.06); }
 
-  /* ===== Hero（二次元氛围） ===== */
+  /* ===== Hero（霸气黑塔大背景） ===== */
   .hero {
-    background: linear-gradient(130deg, #3b0f8f 0%, #5b21b6 40%, #7c3aed 75%, #8b5cf6 100%);
-    padding: 26px 20px 52px;
-    position: relative; overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    padding: 36px 20px 48px;
+    min-height: 380px;
+    background: linear-gradient(130deg, #1e0a4d 0%, #3b0f8f 35%, #5b21b6 70%, #7c3aed 100%);
   }
   .hero-bg {
-    position: absolute; right: -40px; top: -30px;
-    width: 380px; height: 380px;
-    background-image: url('images/991D5CF2E798946D51C49B5835E8E393.webp');
-    background-size: cover; background-position: center;
-    opacity: .35; transform: rotate(6deg);
-    border-radius: 30px;
-    mask-image: linear-gradient(to left, #000 60%, transparent);
-    -webkit-mask-image: linear-gradient(to left, #000 60%, transparent);
+    position: absolute; inset: 0;
+    background-image: url('images/hero_bg.webp');
+    background-size: cover;
+    background-position: center 30%;
+    opacity: .55;
   }
-  .hero::before {
+  .hero-mask {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg,
+      rgba(30,10,77,.95) 0%,
+      rgba(59,15,143,.7) 35%,
+      rgba(91,33,182,.25) 70%,
+      rgba(124,58,237,.05) 100%);
+  }
+  .hero::after {
     content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.12), transparent 40%);
+    background: radial-gradient(circle at 20% 30%, rgba(255,255,255,.1), transparent 50%);
+    pointer-events: none;
   }
   .hero-inner {
     max-width: 1080px; margin: 0 auto;
-    position: relative; z-index: 2;
-    display: flex; align-items: center; gap: 18px;
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 20px;
   }
   .hero-img {
-    width: 64px; height: 64px; border-radius: 50%;
+    width: 84px; height: 84px; border-radius: 50%;
     object-fit: cover;
-    border: 2.5px solid rgba(255,255,255,.9);
-    box-shadow: 0 4px 18px rgba(0,0,0,.3);
+    border: 3px solid rgba(255,255,255,.92);
+    box-shadow: 0 6px 24px rgba(0,0,0,.45), 0 0 0 6px rgba(139,92,246,.25);
     flex-shrink: 0;
   }
   .hero-text h1 { display: none; }
@@ -177,14 +185,14 @@
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
   }
   .skin-wall img {
-    width: 100%; aspect-ratio: 16/6.5;
+    width: 100%; aspect-ratio: 16/10;
     object-fit: cover; border-radius: 12px;
     border: 3px solid var(--thumb-frame);
     box-shadow: 0 5px 16px rgba(76,29,149,.22);
-    transition: transform .2s ease;
+    transition: transform .25s ease, box-shadow .25s ease;
     cursor: pointer;
   }
-  .skin-wall img:hover { transform: translateY(-3px) scale(1.01); }
+  .skin-wall img:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 28px rgba(124,58,237,.35); }
 
   /* ===== 主内容 ===== */
   main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 40px; }
@@ -324,8 +332,9 @@
 <!-- Hero -->
 <header class="hero">
   <div class="hero-bg"></div>
+  <div class="hero-mask"></div>
   <div class="hero-inner">
-    <img class="hero-img" src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="黑塔">
+    <img class="hero-img" src="images/avatar.webp" alt="黑塔">
     <div class="hero-text">
       <h1 class="logo" aria-label="黑塔空间站">
         <span>黑</span><span>塔</span><span>空</span><span>间</span><span>站</span><span class="lg-star">✦</span>
@@ -336,12 +345,12 @@
   </div>
 </header>
 
-<!-- 表情皮肤墙 -->
+<!-- 黑塔皮肤墙（4 张高质量立绘） -->
 <div class="skin-wall">
-  <img src="images/031CD5CAA7B0D9C5FCED78A85DD81613.webp" alt="表情1" loading="lazy" onclick="window.open(this.src,'_blank')">
-  <img src="images/991D5CF2E798946D51C49B5835E8E393.webp" alt="表情2" loading="lazy" onclick="window.open(this.src,'_blank')">
-  <img src="images/EFD2AD77BB68E4FDE53F50FE548E8D69.webp" alt="表情3" loading="lazy" onclick="window.open(this.src,'_blank')">
-  <img src="images/9E00EF724EC4F35AB0FCB505C26EC23E.webp" alt="表情4" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/card1.webp" alt="黑塔 1" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/card2.webp" alt="黑塔 2" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/card3.webp" alt="黑塔 3" loading="lazy" onclick="window.open(this.src,'_blank')">
+  <img src="images/card4.webp" alt="黑塔 4" loading="lazy" onclick="window.open(this.src,'_blank')">
 </div>
 
 <main>
@@ -367,10 +376,10 @@ const SRC_COLORS = {
   '中新网': '#e07800'
 };
 const THUMBS = [
-  'images/9E00EF724EC4F35AB0FCB505C26EC23E.webp',
-  'images/031CD5CAA7B0D9C5FCED78A85DD81613.webp',
-  'images/991D5CF2E798946D51C49B5835E8E393.webp',
-  'images/EFD2AD77BB68E4FDE53F50FE548E8D69.webp'
+  'images/card1.webp',
+  'images/card2.webp',
+  'images/card3.webp',
+  'images/card4.webp'
 ];
 
 let currentFilter = '全部';
