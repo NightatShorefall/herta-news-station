@@ -171,7 +171,7 @@ def cluster_topics(items):
 
 
 def build_summary(topic):
-    """拼接话题内新闻的标题和摘要，截断约 200 字"""
+    """拼接话题内新闻的标题和摘要，截断约 200 字（兜底方案）"""
     parts = []
     for it in topic["items"]:
         parts.append(it["title"])
@@ -189,6 +189,87 @@ def build_summary(topic):
     if len(joined) > 220:
         joined = joined[:220] + "……"
     return joined
+
+
+# ============ 正文抓取 + 提取式摘要（TextRank 简化版） ============
+ARTICLE_SELECTORS = [".rm_txt_con", ".content", "#detail", "#rwb_zw", ".article-content"]
+
+
+def fetch_article(link, timeout=12):
+    """抓取新闻正文，返回清洗后的纯文本；失败返回空串"""
+    try:
+        r = requests.get(link, headers=HEADERS, timeout=timeout)
+        # 用原始 bytes 交给 BeautifulSoup 自动检测编码，避免乱码
+        soup = BeautifulSoup(r.content, "lxml")
+        for sel in ARTICLE_SELECTORS:
+            el = soup.select_one(sel)
+            if el:
+                txt = el.get_text(" ", strip=True)
+                if len(txt) > 80:
+                    return clean_article(txt)
+    except Exception:
+        pass
+    return ""
+
+
+def clean_article(text):
+    """清洗正文：去掉标题/来源/时间戳/字号/分享等噪声片段"""
+    out = []
+    for ln in text.split(" "):
+        ln = ln.strip()
+        if not ln:
+            continue
+        if any(n in ln for n in ["大字体", "小字体", "分享到", "责任编辑"]):
+            continue
+        # 去掉时间戳噪声（如 2026-08-19 10:54:27 / 2026-08-19 / 10:54:27 / 2026年08月19日）
+        if re.fullmatch(r"20\d{2}-\d{2}-\d{2}", ln):
+            continue
+        if re.fullmatch(r"\d{1,2}:\d{2}(:\d{2})?", ln):
+            continue
+        if re.fullmatch(r"20\d{2}年\d{1,2}月\d{1,2}日", ln):
+            continue
+        if "来源：" in ln and len(ln) < 60:
+            continue
+        if re.search(r"^作者[:：]", ln) and len(ln) < 40:
+            continue
+        if re.fullmatch(r"(中国新闻网|人民网|新华社|央视网|中新网|新华网|人民日报)", ln):
+            continue
+        out.append(ln)
+    return "".join(out)
+
+
+def extract_summary(text, max_len=200):
+    """提取式摘要：句子按关键词频率 + 位置加权打分，取高分句拼接"""
+    if not text or len(text) < 50:
+        return ""
+    sents = [s.strip() for s in re.split(r"[。！？；]", text) if len(s.strip()) >= 10]
+    if not sents:
+        return text[:max_len]
+    # 词频统计
+    from collections import Counter
+    freq = Counter()
+    for s in sents:
+        for w in jieba.cut(s):
+            w = w.strip()
+            if len(w) >= 2 and w not in STOP_WORDS and not w.isdigit():
+                freq[w] += 1
+    # 句子打分（词频加权 + 位置加权：首句、次句、末句加分）
+    scored = []
+    for i, s in enumerate(sents):
+        score = sum(freq.get(w, 0) for w in jieba.cut(s) if len(w.strip()) >= 2 and w.strip() not in STOP_WORDS)
+        if i == 0:
+            score *= 1.6
+        elif i == 1:
+            score *= 1.3
+        elif i == len(sents) - 1:
+            score *= 1.2
+        scored.append((score, i, s))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    picked = sorted(scored[:4], key=lambda x: x[1])
+    summary = "".join(p[2] + "。" for p in picked)
+    if len(summary) > max_len:
+        summary = summary[:max_len] + "……"
+    return summary
 
 
 def main():
@@ -221,10 +302,21 @@ def main():
         for it in t_items:
             if it["source"] not in sources:
                 sources.append(it["source"])
+        # 抓正文做提取式摘要（取前 3 篇代表文章，第一篇成功即可）
+        article_text = ""
+        for it in t_items[:3]:
+            txt = fetch_article(it["link"])
+            if len(txt) >= 100:
+                article_text = txt
+                break
+        if article_text:
+            summary = extract_summary(article_text)
+        else:
+            summary = build_summary(tp)
         topics_data.append({
             "id": i,
             "title": t_items[0]["title"],
-            "summary": build_summary(tp),
+            "summary": summary,
             "sources": sources,
             "count": len(t_items),
             "items": t_items,
