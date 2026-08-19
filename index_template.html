@@ -10,23 +10,52 @@
     --purple-dark: #7c3aed;
     --purple-deep: #5b21b6;
     --purple-ink: #4c1d95;
-    --bg: #ffffff;
+    --bg: #fbfaff;
     --fg: #1f2328;
     --muted: #6b7280;
     --border: #eef0f4;
+    --card-bg: #ffffff;
+    --card-hover-border: #ddd6fe;
+    --summary-bg: #faf9ff;
+    --summary-fg: #3f3f46;
+    --topbar-bg: rgba(255,255,255,.94);
+    --f-btn-bg: #ffffff;
+    --f-btn-border: #e4e0f7;
+    --thumb-frame: #ffffff;
+    --count-bg: rgba(255,255,255,.94);
+    --dot-ring: rgba(255,255,255,.5);
+    --section-ink: var(--purple-ink);
+  }
+  [data-theme="dark"] {
+    --bg: #16111f;
+    --fg: #e9e6f2;
+    --muted: #9d94b8;
+    --border: #2e2742;
+    --card-bg: #221b30;
+    --card-hover-border: #463a68;
+    --summary-bg: #2a2240;
+    --summary-fg: #cbc4de;
+    --topbar-bg: rgba(22,17,31,.93);
+    --f-btn-bg: #241d33;
+    --f-btn-border: #3a3152;
+    --thumb-frame: #2e2742;
+    --count-bg: rgba(255,255,255,.95);
+    --dot-ring: rgba(0,0,0,.35);
+    --section-ink: #c4b5fd;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #fbfaff;
+    background: var(--bg);
     color: var(--fg);
     line-height: 1.55;
+    transition: background .25s ease, color .25s ease;
   }
 
   /* ===== 顶部导航条（严谨感 + 来源筛选） ===== */
   .topbar {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(255,255,255,.94);
+    background: var(--topbar-bg);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
   }
@@ -46,8 +75,8 @@
   .f-btn {
     font-size: .75rem; padding: 4px 12px;
     border-radius: 20px; cursor: pointer;
-    border: 1px solid #e4e0f7;
-    background: #fff; color: var(--muted);
+    border: 1px solid var(--f-btn-border);
+    background: var(--f-btn-bg); color: var(--muted);
     transition: all .15s ease;
   }
   .f-btn:hover { border-color: var(--purple); color: var(--purple); }
@@ -55,6 +84,17 @@
     background: linear-gradient(90deg, var(--purple-ink), var(--purple));
     border-color: transparent; color: #fff; font-weight: 600;
   }
+  .tools { margin-left: auto; display: flex; gap: 8px; }
+  .tool-btn {
+    font-size: .9rem; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer;
+    border: 1px solid var(--f-btn-border);
+    background: var(--f-btn-bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s ease;
+    line-height: 1;
+  }
+  .tool-btn:hover { border-color: var(--purple); transform: scale(1.06); }
 
   /* ===== Hero（二次元氛围） ===== */
   .hero {
@@ -139,7 +179,7 @@
   .skin-wall img {
     width: 100%; aspect-ratio: 16/6.5;
     object-fit: cover; border-radius: 12px;
-    border: 3px solid #fff;
+    border: 3px solid var(--thumb-frame);
     box-shadow: 0 5px 16px rgba(76,29,149,.22);
     transition: transform .2s ease;
     cursor: pointer;
@@ -154,7 +194,7 @@
   }
   .section-title {
     font-size: 1rem; font-weight: 800; letter-spacing: 1px;
-    color: var(--purple-ink);
+    color: var(--section-ink);
   }
   .section-title::before { content: "✦ "; color: var(--purple); }
   .section-count { font-size: .78rem; color: var(--muted); }
@@ -165,18 +205,18 @@
     gap: 16px;
   }
   .card {
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .25s ease;
     display: flex; flex-direction: column;
   }
   .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(124,58,237,.16);
-    border-color: #ddd6fe;
+    border-color: var(--card-hover-border);
   }
   /* 缩略图：黑塔图 + 渐变叠加 */
   .thumb {
@@ -207,7 +247,7 @@
   }
   .thumb-count {
     position: absolute; top: 8px; right: 8px;
-    background: rgba(255,255,255,.94); color: var(--purple-deep);
+    background: var(--count-bg); color: var(--purple-deep);
     font-size: .66rem; font-weight: 700;
     padding: 2px 8px; border-radius: 10px;
   }
@@ -217,7 +257,7 @@
   }
   .thumb-srcs .dot {
     width: 8px; height: 8px; border-radius: 50%;
-    box-shadow: 0 0 0 2px rgba(255,255,255,.5);
+    box-shadow: 0 0 0 2px var(--dot-ring);
   }
   /* 卡片体 */
   .card-body { padding: 11px 13px 13px; display: flex; flex-direction: column; flex: 1; }
@@ -245,9 +285,9 @@
   .card-summary {
     display: none;
     margin-top: 9px; padding: 9px 11px;
-    background: #faf9ff; border-left: 3px solid var(--purple);
+    background: var(--summary-bg); border-left: 3px solid var(--purple);
     border-radius: 0 8px 8px 0;
-    font-size: .8rem; color: #3f3f46; line-height: 1.7;
+    font-size: .8rem; color: var(--summary-fg); line-height: 1.7;
   }
   .card.open .card-summary { display: block; }
 
@@ -274,6 +314,10 @@
   <div class="topbar-inner">
     <span class="topbar-logo">✦ 黑塔空间站</span>
     <div class="filters" id="filters"></div>
+    <div class="tools">
+      <button class="tool-btn" id="voiceBtn" title="语音播报今日要闻">🔊</button>
+      <button class="tool-btn" id="themeBtn" title="切换深色/浅色模式">🌙</button>
+    </div>
   </div>
 </div>
 
@@ -399,6 +443,46 @@ function esc(s) {
 
 document.getElementById('meta').textContent =
   DATA.date + ' · ' + DATA.total + ' 条跨站要闻 · ' + DATA.generated_at + ' 更新';
+
+/* ===== 深色/浅色主题切换 ===== */
+const themeBtn = document.getElementById('themeBtn');
+let isDark = localStorage.getItem('ht-theme') === 'dark';
+function applyTheme() {
+  document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+  themeBtn.textContent = isDark ? '☀️' : '🌙';
+}
+themeBtn.onclick = () => {
+  isDark = !isDark;
+  localStorage.setItem('ht-theme', isDark ? 'dark' : 'light');
+  applyTheme();
+};
+applyTheme();
+
+/* ===== 语音播报（浏览器 TTS 念今日要闻标题） ===== */
+const voiceBtn = document.getElementById('voiceBtn');
+let speaking = false;
+function stopSpeak() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  speaking = false;
+  voiceBtn.textContent = '🔊';
+}
+voiceBtn.onclick = () => {
+  if (speaking) { stopSpeak(); return; }
+  if (!('speechSynthesis' in window)) { alert('当前浏览器不支持语音播报'); return; }
+  const topics = currentFilter === '全部' ? DATA.topics : DATA.topics.filter(t => t.sources.indexOf(currentFilter) >= 0);
+  const text = '黑塔空间站，今日要闻播报，共 ' + topics.length + ' 条。' +
+    topics.map((t, i) => '第' + (i + 1) + '条，' + t.title + '。').join('');
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 1.05;
+  u.pitch = 1.1;
+  u.onend = () => { speaking = false; voiceBtn.textContent = '🔊'; };
+  u.onerror = () => { speaking = false; voiceBtn.textContent = '🔊'; };
+  speaking = true;
+  voiceBtn.textContent = '⏹';
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+};
 
 renderFilters();
 renderCards();
