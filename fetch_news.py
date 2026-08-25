@@ -33,6 +33,37 @@ def today_str():
     return datetime.now(CST).strftime("%Y-%m-%d")
 
 
+# 公历节日 / 农历节日（用于日期栏）
+SOLAR_FESTIVALS = {
+    (1, 1): "元旦", (3, 8): "妇女节", (5, 1): "劳动节", (6, 1): "儿童节",
+    (7, 1): "建党节", (8, 1): "建军节", (9, 10): "教师节", (10, 1): "国庆节",
+}
+LUNAR_FESTIVALS = {
+    (1, 1): "春节", (1, 15): "元宵节", (5, 5): "端午节", (7, 7): "七夕节",
+    (8, 15): "中秋节", (9, 9): "重阳节", (12, 8): "腊八节",
+}
+
+
+def build_date_info(now=None):
+    """生成日期信息：公历 + 星期 + 农历 + 节日，供前端日期栏显示"""
+    from zhdate import ZhDate
+    now = now or datetime.now(CST)
+    zh = ZhDate.from_datetime(now.replace(tzinfo=None))
+    leap = "闰" if zh.leap_month else ""
+    weekdays = ["一", "二", "三", "四", "五", "六", "日"]
+    festival = ""
+    if (now.month, now.day) in SOLAR_FESTIVALS:
+        festival = SOLAR_FESTIVALS[(now.month, now.day)]
+    elif (zh.lunar_month, zh.lunar_day) in LUNAR_FESTIVALS:
+        festival = LUNAR_FESTIVALS[(zh.lunar_month, zh.lunar_day)]
+    return {
+        "date": now.strftime("%Y-%m-%d"),
+        "weekday": f"星期{weekdays[now.weekday()]}",
+        "lunar": f"农历{leap}{zh.lunar_month}月{zh.lunar_day}日",
+        "festival": festival,
+    }
+
+
 def strip_html(text):
     if not text:
         return ""
@@ -329,6 +360,7 @@ def main():
 
     output = {
         "date": today,
+        "date_info": build_date_info(),
         "generated_at": datetime.now(CST).strftime("%Y-%m-%d %H:%M:%S"),
         "stat": stat,
         "total": len(topics_data),
