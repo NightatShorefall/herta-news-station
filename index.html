@@ -639,6 +639,13 @@ let favFilter = false;
 let searchText = '';
 let favs = new Set(JSON.parse(localStorage.getItem('ht-fav') || '[]'));
 
+/* ===== HTML 转义 ===== */
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 /* ===== Toast ===== */
 let toastTimer = null;
 function showToast(msg) {
