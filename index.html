@@ -344,7 +344,7 @@
     border-radius: 14px; overflow: hidden; cursor: pointer;
     display: flex; flex-direction: column;
     position: relative;
-    opacity: 0; transform: translateY(18px);
+    opacity: 1;
     animation: cardIn .5s ease forwards;
     transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
@@ -354,6 +354,7 @@
     border-color: var(--card-hover-border);
   }
   @keyframes cardIn {
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .card::after {
